@@ -1,0 +1,44 @@
+services:
+  # Backend Service
+  - type: web
+    name: virasat-backend
+    env: node
+    repo: https://github.com/YOUR_USERNAME/virasat.git
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: RAZORPAY_KEY_ID
+        sync: false
+      - key: RAZORPAY_KEY_SECRET
+        sync: false
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false
+      - key: GOOGLE_AI_API_KEY
+        sync: false
+
+  # Frontend Service
+  - type: web
+    name: virasat-frontend
+    env: static
+    repo: https://github.com/YOUR_USERNAME/virasat.git
+    rootDir: frontend
+    buildCommand: npm run build
+    publishPath: dist
+    envVars:
+      - key: VITE_API_URL
+        value: https://virasat-backend.onrender.com
+    routes:
+      - type: rewrite
+        source: /api/*
+        destination: https://virasat-backend.onrender.com/api/*
