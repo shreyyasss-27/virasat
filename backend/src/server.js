@@ -22,7 +22,7 @@ const PORT = process.env.PORT || 5001;
 
 app.use(cors({
   origin: process.env.NODE_ENV === 'production' 
-    ? ['https://virasat-frontend.onrender.com', 'https://virasat-frontend.onrender.com/']
+    ? ['https://virasat-frontend-production.up.railway.app', 'https://virasat-frontend-production.up.railway.app/']
     : "http://localhost:5173",
   credentials: true 
 }))

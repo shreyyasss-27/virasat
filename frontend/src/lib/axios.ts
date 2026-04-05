@@ -6,7 +6,9 @@ import { toast } from "sonner";
 //     ? "http://localhost:5001/api" 
 //     : "/api";
 
-const BASE_URL: string = "http://localhost:5001/api";
+const BASE_URL: string = import.meta.env.VITE_API_URL 
+  ? `${import.meta.env.VITE_API_URL}/api`
+  : "http://localhost:5001/api";
 
 export const axiosInstance: AxiosInstance = axios.create({
   baseURL: BASE_URL,
