@@ -47,7 +47,7 @@ export const useGeminiChat = ({ chatId, api, body }: UseGeminiChatProps) => {
   const reload = useCallback(() => {
     // MOCK: Simulate API retry (retries last message if there are messages)
     if (messages.length > 0) {
-      const lastUserMessage = messages.findLast(m => m.role === 'user');
+      const lastUserMessage = messages.filter(m => m.role === 'user').pop();
       if (lastUserMessage) {
         // Re-send the last message content
         const contentToResend = lastUserMessage.content;
