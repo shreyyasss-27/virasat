@@ -7,7 +7,8 @@ interface UploadProps {
 }
 
 const MediaUpload: React.FC<UploadProps> = ({ module }) => {
-  const { uploadMedia, isUploading } = useMediaStore();
+  const { uploadMedia, isUploadingVideo, isUploadingImage } = useMediaStore();
+  const isUploading = isUploadingVideo || isUploadingImage;
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {

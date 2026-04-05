@@ -56,7 +56,7 @@ export default function BhartiyamPage() {
             <aside className="hidden md:flex w-72 border-r">
                 <ChatHistorySidebar
                     currentChatId={activeConversation?._id || ""}
-                    history={conversations}
+                    history={conversations.filter(c => c._id).map(c => ({ _id: c._id!, title: c.title }))}
                     onSelectChat={openChat}
                     onStartNewChat={startNewChat}
                 />
@@ -67,7 +67,7 @@ export default function BhartiyamPage() {
                 <SheetContent side="left" className="w-72 p-0">
                     <ChatHistorySidebar
                         currentChatId={activeConversation?._id || ""}
-                        history={conversations}
+                        history={conversations.filter(c => c._id).map(c => ({ _id: c._id!, title: c.title }))}
                         onSelectChat={openChat}
                         onStartNewChat={startNewChat}
                     />

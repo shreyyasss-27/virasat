@@ -327,7 +327,7 @@ export default function Sangam() {
                   <div className="flex justify-between items-start gap-4">
                     <div className="space-y-2 flex-1">
                       <div className="flex items-center gap-2">
-                        <span className="text-xs font-bold text-blue-600">@{disc.userId?.username}</span>
+                        <span className="text-xs font-bold text-blue-600">@{disc.userId?.firstName || 'User'}</span>
                         <span className="text-muted-foreground text-[10px]">•</span>
                         <span className="text-[10px] text-muted-foreground flex items-center gap-1">
                           <Clock className="w-3 h-3" /> {new Date(disc.createdAt).toLocaleDateString()}
