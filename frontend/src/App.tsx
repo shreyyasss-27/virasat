@@ -159,9 +159,15 @@ const RoleProtectedRoute = ({
 }) => {
   const { authUser } = useAuthStore();
 
+  // Debug logging
+  console.log("RoleProtectedRoute - authUser:", authUser);
+  console.log("RoleProtectedRoute - allowedRoles:", allowedRoles);
+  console.log("RoleProtectedRoute - user roles:", authUser?.roles);
+
   if (!authUser) return <Navigate to="/auth/signin" replace />;
 
   if (allowedRoles && !allowedRoles.some(role => authUser.roles?.includes(role))) {
+    console.log("RoleProtectedRoute - Access denied, redirecting to home");
     return <Navigate to="/" replace />;
   }
 
