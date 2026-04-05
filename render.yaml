@@ -3,7 +3,7 @@ services:
   - type: web
     name: virasat-backend
     env: node
-    repo: https://github.com/YOUR_USERNAME/virasat.git
+    repo: https://github.com/shreyyasss-27/virasat.git
     rootDir: backend
     buildCommand: npm install
     startCommand: npm start
@@ -31,7 +31,7 @@ services:
   - type: web
     name: virasat-frontend
     env: static
-    repo: https://github.com/YOUR_USERNAME/virasat.git
+    repo: https://github.com/shreyyasss-27/virasat.git
     rootDir: frontend
     buildCommand: npm run build
     publishPath: dist
