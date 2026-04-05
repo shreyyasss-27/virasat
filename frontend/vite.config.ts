@@ -14,6 +14,11 @@ export default defineConfig({
       },
     },
   },
+  preview: {
+    allowedHosts: ['virasat-frontend-production.up.railway.app', '.up.railway.app'],
+    host: true,
+    port: 3000
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
