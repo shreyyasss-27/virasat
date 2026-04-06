@@ -9,14 +9,28 @@ export async function getAdminStats(req, res) {
     // Set proper content type
     res.setHeader('Content-Type', 'application/json');
     
+    // Debug: Test database connection
+    console.log("Testing database connection...");
+    
     // Get counts from database
+    console.log("Getting user count...");
     const totalUsers = await User.countDocuments();
+    console.log("User count:", totalUsers);
+    
+    console.log("Getting product count...");
     const totalProducts = await Product.countDocuments();
+    console.log("Product count:", totalProducts);
+    
+    console.log("Getting order count...");
     const totalOrders = await Order.countDocuments();
+    console.log("Order count:", totalOrders);
     
     // Calculate total revenue (sum of all order totals)
+    console.log("Getting orders for revenue calculation...");
     const orders = await Order.find({});
+    console.log("Orders found:", orders.length);
     const totalRevenue = orders.reduce((sum, order) => sum + (order.totalAmount || 0), 0);
+    console.log("Total revenue calculated:", totalRevenue);
 
     console.log("Admin stats fetched:", { totalUsers, totalProducts, totalOrders, totalRevenue });
 
@@ -28,7 +42,8 @@ export async function getAdminStats(req, res) {
     });
   } catch (error) {
     console.error("Error in getAdminStats:", error.message);
-    res.status(500).json({ message: "Failed to fetch admin stats" });
+    console.error("Full error:", error);
+    res.status(500).json({ message: "Internal Server Error", error: error.message });
   }
 }
 
