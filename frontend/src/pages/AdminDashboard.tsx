@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Users, Package, Settings, BarChart3, Shield, Database } from "lucide-react";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
+import { axiosInstance } from "@/lib/axios";
 
 export default function AdminDashboard() {
   const [stats, setStats] = useState({
@@ -23,19 +24,7 @@ export default function AdminDashboard() {
   const fetchStats = async () => {
     try {
       setIsLoading(true);
-      const response = await fetch("/api/admin/stats", {
-        credentials: "include",
-        headers: {
-          Accept: "application/json",
-        },
-      });
-      
-      if (!response.ok) {
-        const text = await response.text().catch(() => "");
-        throw new Error(`HTTP ${response.status}: ${text || response.statusText}`);
-      }
-      
-      const data = await response.json();
+      const { data } = await axiosInstance.get("/admin/stats");
       setStats(data);
     } catch (error) {
       console.error("Failed to fetch stats:", error);

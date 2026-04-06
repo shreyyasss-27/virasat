@@ -12,6 +12,7 @@ import {
   X
 } from "lucide-react";
 import { toast } from "sonner";
+import { axiosInstance } from "@/lib/axios";
 
 type AdminOrderItem = {
   name?: string;
@@ -57,15 +58,7 @@ export default function AdminOrders() {
   const fetchOrders = async () => {
     try {
       setLoading(true);
-      const response = await fetch("/api/admin/orders", {
-        credentials: "include",
-        headers: { Accept: "application/json" },
-      });
-      if (!response.ok) {
-        const text = await response.text().catch(() => "");
-        throw new Error(`HTTP ${response.status}: ${text || response.statusText}`);
-      }
-      const data = await response.json();
+      const { data } = await axiosInstance.get("/admin/orders");
       setOrders(Array.isArray(data?.orders) ? data.orders : []);
     } catch (error) {
       console.error("Failed to fetch orders:", error);
@@ -110,17 +103,11 @@ export default function AdminOrders() {
     if (!selectedOrder) return;
     
     try {
-      const response = await fetch(`/api/admin/orders/${selectedOrder._id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: "include",
-        body: JSON.stringify(editForm),
-      });
-
-      if (response.ok) {
-        const updatedOrder = await response.json();
+      const { data: updatedOrder } = await axiosInstance.put(
+        `/admin/orders/${selectedOrder._id}`,
+        editForm
+      );
+      if (updatedOrder) {
         setOrders(orders.map(o => o._id === selectedOrder._id ? { ...o, ...updatedOrder } : o));
         toast.success("Order updated successfully");
         setIsEditing(false);

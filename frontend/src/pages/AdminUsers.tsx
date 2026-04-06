@@ -13,6 +13,7 @@ import {
   X
 } from "lucide-react";
 import { toast } from "sonner";
+import { axiosInstance } from "@/lib/axios";
 
 type AdminUser = {
   _id: string;
@@ -63,15 +64,7 @@ export default function AdminUsers() {
   const fetchUsers = async () => {
     try {
       setLoading(true);
-      const response = await fetch("/api/admin/users", {
-        credentials: "include",
-        headers: { Accept: "application/json" },
-      });
-      if (!response.ok) {
-        const text = await response.text().catch(() => "");
-        throw new Error(`HTTP ${response.status}: ${text || response.statusText}`);
-      }
-      const data = await response.json();
+      const { data } = await axiosInstance.get("/admin/users");
       setUsers(Array.isArray(data?.users) ? data.users : []);
     } catch (error) {
       toast.error("Failed to fetch users");

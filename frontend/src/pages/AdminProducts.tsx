@@ -14,6 +14,7 @@ import {
   X
 } from "lucide-react";
 import { toast } from "sonner";
+import { axiosInstance } from "@/lib/axios";
 
 type AdminProduct = {
   _id: string;
@@ -50,15 +51,7 @@ export default function AdminProducts() {
   const fetchProducts = async () => {
     try {
       setLoading(true);
-      const response = await fetch("/api/admin/products", {
-        credentials: "include",
-        headers: { Accept: "application/json" },
-      });
-      if (!response.ok) {
-        const text = await response.text().catch(() => "");
-        throw new Error(`HTTP ${response.status}: ${text || response.statusText}`);
-      }
-      const data = await response.json();
+      const { data } = await axiosInstance.get("/admin/products");
       setProducts(Array.isArray(data?.products) ? data.products : []);
     } catch (error) {
       toast.error("Failed to fetch products");
@@ -102,17 +95,11 @@ export default function AdminProducts() {
     if (!selectedProduct) return;
     
     try {
-      const response = await fetch(`/api/admin/products/${selectedProduct._id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: "include",
-        body: JSON.stringify(editForm),
-      });
-
-      if (response.ok) {
-        const updatedProduct = await response.json();
+      const { data: updatedProduct } = await axiosInstance.put(
+        `/admin/products/${selectedProduct._id}`,
+        editForm
+      );
+      if (updatedProduct) {
         setProducts(products.map(p => p._id === selectedProduct._id ? { ...p, ...updatedProduct } : p));
         toast.success("Product updated successfully");
         setIsEditing(false);
