@@ -6,11 +6,13 @@ import { toast } from "sonner";
 //     ? "http://localhost:5001/api" 
 //     : "/api";
 
-const BASE_URL: string = 
-  import.meta.env.VITE_API_URL || 
-  (import.meta.env.MODE === 'production' 
-    ? 'https://virasat-backend-production.up.railway.app/api'
-    : "http://localhost:5001/api");
+const apiOrigin = import.meta.env.VITE_API_URL
+  ? import.meta.env.VITE_API_URL.replace(/\/$/, "")
+  : (import.meta.env.MODE === "production"
+      ? "https://virasat-backend-production.up.railway.app"
+      : "http://localhost:5001");
+
+const BASE_URL: string = `${apiOrigin}/api`;
 
 export const axiosInstance: AxiosInstance = axios.create({
   baseURL: BASE_URL,
