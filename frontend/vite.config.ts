@@ -7,12 +7,12 @@ import tailwindcss from "@tailwindcss/vite"
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   server: {
-    proxy: {
+    proxy: import.meta.env.MODE === 'development' ? {
       "/api": {
         target: "http://localhost:5001",
         changeOrigin: true,
       },
-    },
+    } : undefined,
   },
   preview: {
     allowedHosts: ['virasat-frontend-production.up.railway.app', '.up.railway.app'],
